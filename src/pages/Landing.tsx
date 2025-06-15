@@ -46,7 +46,7 @@ const Landing = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-slate-50">
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -84,7 +84,7 @@ const Landing = () => {
           <Badge variant="secondary" className="mb-6">
             Tecnologia de Ponta em Recrutamento
           </Badge>
-          <h1 className="text-4xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
+          <h1 className="text-4xl lg:text-6xl font-bold text-slate-900 mb-6 leading-tight">
             Contrate os
             <span className="text-primary"> Melhores Talentos</span>
             <br />com Precisão Científica
@@ -112,7 +112,7 @@ const Landing = () => {
       <section id="recursos" className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
               Recursos Que Transformam Seu Recrutamento
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -142,7 +142,7 @@ const Landing = () => {
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-6">
+              <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-6">
                 Resultados Comprovados em Empresas Líderes
               </h2>
               <p className="text-lg text-muted-foreground mb-8">
@@ -153,7 +153,7 @@ const Landing = () => {
                 {benefits.map((benefit, index) => (
                   <div key={index} className="flex items-center space-x-3">
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span className="text-foreground font-medium">{benefit}</span>
+                    <span className="text-slate-900 font-medium">{benefit}</span>
                   </div>
                 ))}
               </div>
