@@ -101,22 +101,24 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted/30 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
       <div className="w-full max-w-lg">
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center space-x-2">
-            <div className="h-10 w-10 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold">HR</span>
+            <div className="h-10 w-10 bg-[#0A2F5C] rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold">DIS</span>
             </div>
-            <span className="text-2xl font-bold text-foreground">TalentMatch</span>
+            <span className="text-2xl font-bold text-slate-900">
+              Talent<span style={{ color: '#0A2F5C' }}>Match</span>
+            </span>
           </Link>
         </div>
 
-        <Card className="shadow-lg border-0">
+        <Card className="shadow-xl border-0 bg-white">
           <CardHeader className="space-y-1 text-center">
-            <CardTitle className="text-2xl font-bold">Crie sua conta</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-2xl font-bold text-slate-900">Crie sua conta</CardTitle>
+            <CardDescription className="text-slate-600">
               Comece seu teste gratuito de 14 dias agora mesmo
             </CardDescription>
           </CardHeader>
@@ -124,7 +126,7 @@ const Register = () => {
             {/* Google Signup */}
             <Button
               variant="outline"
-              className="w-full h-12"
+              className="w-full h-12 border-slate-200 hover:bg-slate-50"
               onClick={handleGoogleSignup}
               disabled={isLoading}
             >
@@ -154,7 +156,7 @@ const Register = () => {
                 <Separator className="w-full" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-card px-2 text-muted-foreground">ou</span>
+                <span className="bg-white px-2 text-slate-500">ou</span>
               </div>
             </div>
 
@@ -162,7 +164,7 @@ const Register = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="companyName">Nome da Empresa</Label>
+                  <Label htmlFor="companyName" className="text-slate-700">Nome da Empresa</Label>
                   <Input
                     id="companyName"
                     name="companyName"
@@ -171,12 +173,12 @@ const Register = () => {
                     value={formData.companyName}
                     onChange={handleInputChange}
                     required
-                    className="h-11"
+                    className="h-11 border-slate-200 focus:border-[#0A2F5C] focus:ring-[#0A2F5C]"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="cnpj">CNPJ</Label>
+                  <Label htmlFor="cnpj" className="text-slate-700">CNPJ</Label>
                   <Input
                     id="cnpj"
                     name="cnpj"
@@ -185,13 +187,13 @@ const Register = () => {
                     value={formData.cnpj}
                     onChange={handleInputChange}
                     required
-                    className="h-11"
+                    className="h-11 border-slate-200 focus:border-[#0A2F5C] focus:ring-[#0A2F5C]"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="fullName">Nome Completo</Label>
+                <Label htmlFor="fullName" className="text-slate-700">Nome Completo</Label>
                 <Input
                   id="fullName"
                   name="fullName"
@@ -200,12 +202,12 @@ const Register = () => {
                   value={formData.fullName}
                   onChange={handleInputChange}
                   required
-                  className="h-11"
+                  className="h-11 border-slate-200 focus:border-[#0A2F5C] focus:ring-[#0A2F5C]"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email">E-mail Corporativo</Label>
+                <Label htmlFor="email" className="text-slate-700">E-mail Corporativo</Label>
                 <Input
                   id="email"
                   name="email"
@@ -214,14 +216,14 @@ const Register = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                  className="h-11"
+                  className="h-11 border-slate-200 focus:border-[#0A2F5C] focus:ring-[#0A2F5C]"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="role">Cargo</Label>
+                <Label htmlFor="role" className="text-slate-700">Cargo</Label>
                 <Select onValueChange={handleSelectChange} required>
-                  <SelectTrigger className="h-11">
+                  <SelectTrigger className="h-11 border-slate-200 focus:border-[#0A2F5C] focus:ring-[#0A2F5C]">
                     <SelectValue placeholder="Selecione seu cargo" />
                   </SelectTrigger>
                   <SelectContent>
@@ -236,7 +238,7 @@ const Register = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="password">Senha</Label>
+                  <Label htmlFor="password" className="text-slate-700">Senha</Label>
                   <Input
                     id="password"
                     name="password"
@@ -245,12 +247,12 @@ const Register = () => {
                     value={formData.password}
                     onChange={handleInputChange}
                     required
-                    className="h-11"
+                    className="h-11 border-slate-200 focus:border-[#0A2F5C] focus:ring-[#0A2F5C]"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirmar Senha</Label>
+                  <Label htmlFor="confirmPassword" className="text-slate-700">Confirmar Senha</Label>
                   <Input
                     id="confirmPassword"
                     name="confirmPassword"
@@ -259,7 +261,7 @@ const Register = () => {
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
                     required
-                    className="h-11"
+                    className="h-11 border-slate-200 focus:border-[#0A2F5C] focus:ring-[#0A2F5C]"
                   />
                 </div>
               </div>
@@ -273,13 +275,13 @@ const Register = () => {
                     setFormData(prev => ({ ...prev, acceptTerms: checked as boolean }))
                   }
                 />
-                <Label htmlFor="acceptTerms" className="text-sm leading-relaxed">
+                <Label htmlFor="acceptTerms" className="text-sm leading-relaxed text-slate-700">
                   Aceito os{" "}
-                  <Link to="/terms" className="text-primary hover:underline">
+                  <Link to="/terms" className="text-[#0A2F5C] hover:underline">
                     termos de uso
                   </Link>{" "}
                   e a{" "}
-                  <Link to="/privacy" className="text-primary hover:underline">
+                  <Link to="/privacy" className="text-[#0A2F5C] hover:underline">
                     política de privacidade
                   </Link>
                 </Label>
@@ -287,7 +289,7 @@ const Register = () => {
 
               <Button 
                 type="submit" 
-                className="w-full h-12"
+                className="w-full h-12 bg-[#0A2F5C] hover:bg-[#061E3B] text-white font-semibold"
                 disabled={isLoading}
               >
                 {isLoading ? "Criando conta..." : "Criar conta gratuita"}
@@ -295,10 +297,10 @@ const Register = () => {
             </form>
 
             <div className="text-center text-sm">
-              <span className="text-muted-foreground">Já tem uma conta? </span>
+              <span className="text-slate-600">Já tem uma conta? </span>
               <Link 
                 to="/login" 
-                className="text-primary hover:underline font-medium"
+                className="text-[#0A2F5C] hover:underline font-medium"
               >
                 Fazer login
               </Link>
@@ -306,7 +308,7 @@ const Register = () => {
           </CardContent>
         </Card>
 
-        <div className="text-center mt-6 text-sm text-muted-foreground">
+        <div className="text-center mt-6 text-sm text-slate-500">
           <p>✓ 14 dias grátis • ✓ Sem compromisso • ✓ Cancele quando quiser</p>
         </div>
       </div>

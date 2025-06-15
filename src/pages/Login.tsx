@@ -58,22 +58,24 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted/30 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center space-x-2">
-            <div className="h-10 w-10 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold">HR</span>
+            <div className="h-10 w-10 bg-[#0A2F5C] rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold">DIS</span>
             </div>
-            <span className="text-2xl font-bold text-foreground">TalentMatch</span>
+            <span className="text-2xl font-bold text-slate-900">
+              Talent<span style={{ color: '#0A2F5C' }}>Match</span>
+            </span>
           </Link>
         </div>
 
-        <Card className="shadow-lg border-0">
+        <Card className="shadow-xl border-0 bg-white">
           <CardHeader className="space-y-1 text-center">
-            <CardTitle className="text-2xl font-bold">Bem-vindo de volta</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-2xl font-bold text-slate-900">Bem-vindo de volta</CardTitle>
+            <CardDescription className="text-slate-600">
               Entre com sua conta para acessar o painel
             </CardDescription>
           </CardHeader>
@@ -81,7 +83,7 @@ const Login = () => {
             {/* Google Login */}
             <Button
               variant="outline"
-              className="w-full h-12"
+              className="w-full h-12 border-slate-200 hover:bg-slate-50"
               onClick={handleGoogleLogin}
               disabled={isLoading}
             >
@@ -111,14 +113,14 @@ const Login = () => {
                 <Separator className="w-full" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-card px-2 text-muted-foreground">ou</span>
+                <span className="bg-white px-2 text-slate-500">ou</span>
               </div>
             </div>
 
             {/* Email Login Form */}
             <form onSubmit={handleEmailLogin} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">E-mail</Label>
+                <Label htmlFor="email" className="text-slate-700">E-mail</Label>
                 <Input
                   id="email"
                   type="email"
@@ -126,16 +128,16 @@ const Login = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="h-12"
+                  className="h-12 border-slate-200 focus:border-[#0A2F5C] focus:ring-[#0A2F5C]"
                 />
               </div>
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="password">Senha</Label>
+                  <Label htmlFor="password" className="text-slate-700">Senha</Label>
                   <Link 
                     to="/forgot-password" 
-                    className="text-sm text-primary hover:underline"
+                    className="text-sm text-[#0A2F5C] hover:underline"
                   >
                     Esqueceu a senha?
                   </Link>
@@ -147,13 +149,13 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="h-12"
+                  className="h-12 border-slate-200 focus:border-[#0A2F5C] focus:ring-[#0A2F5C]"
                 />
               </div>
 
               <Button 
                 type="submit" 
-                className="w-full h-12"
+                className="w-full h-12 bg-[#0A2F5C] hover:bg-[#061E3B] text-white font-semibold"
                 disabled={isLoading}
               >
                 {isLoading ? "Entrando..." : "Entrar"}
@@ -161,10 +163,10 @@ const Login = () => {
             </form>
 
             <div className="text-center text-sm">
-              <span className="text-muted-foreground">Não tem uma conta? </span>
+              <span className="text-slate-600">Não tem uma conta? </span>
               <Link 
                 to="/register" 
-                className="text-primary hover:underline font-medium"
+                className="text-[#0A2F5C] hover:underline font-medium"
               >
                 Cadastre-se gratuitamente
               </Link>
@@ -172,14 +174,14 @@ const Login = () => {
           </CardContent>
         </Card>
 
-        <div className="text-center mt-6 text-sm text-muted-foreground">
+        <div className="text-center mt-6 text-sm text-slate-500">
           <p>
             Ao continuar, você concorda com nossos{" "}
-            <Link to="/terms" className="text-primary hover:underline">
+            <Link to="/terms" className="text-[#0A2F5C] hover:underline">
               Termos de Uso
             </Link>{" "}
             e{" "}
-            <Link to="/privacy" className="text-primary hover:underline">
+            <Link to="/privacy" className="text-[#0A2F5C] hover:underline">
               Política de Privacidade
             </Link>
           </p>
