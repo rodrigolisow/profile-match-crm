@@ -82,8 +82,8 @@ const CandidateDashboard = () => {
 
   const getResultStatus = (assessmentId: string) => {
     const result = results.find(r => r.assessment_id === assessmentId);
-    if (!result) return { status: 'Não Iniciado', color: 'bg-gray-100 text-gray-800' };
-    if (result.completed_at) return { status: 'Concluído', color: 'bg-green-100 text-green-800' };
+    if (!result) return { status: 'Não Iniciado', color: 'bg-slate-100 text-slate-600' };
+    if (result.completed_at) return { status: 'Concluído', color: 'bg-cyan-100 text-cyan-800' };
     return { status: 'Em Andamento', color: 'bg-blue-50 text-blue-700' };
   };
 

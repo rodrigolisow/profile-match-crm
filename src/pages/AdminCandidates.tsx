@@ -147,13 +147,13 @@ const AdminCandidates = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "Concluído":
-        return "bg-green-100 text-green-800";
+        return "bg-cyan-100 text-cyan-800";
       case "Em Andamento":
         return "bg-blue-50 text-blue-700";
       case "Pendente":
-        return "bg-gray-100 text-gray-800";
+        return "bg-slate-100 text-slate-600";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-slate-100 text-slate-600";
     }
   };
 

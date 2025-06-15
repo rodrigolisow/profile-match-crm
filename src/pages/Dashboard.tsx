@@ -70,13 +70,13 @@ const Dashboard = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "Aprovado":
-        return "bg-green-100 text-green-800";
+        return "bg-cyan-100 text-cyan-800";
       case "Teste Concluído":
-        return "bg-blue-100 text-blue-800";
+        return "bg-cyan-100 text-cyan-800";
       case "Em Andamento":
         return "bg-blue-50 text-blue-700";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-slate-100 text-slate-600";
     }
   };
 
@@ -128,7 +128,7 @@ const Dashboard = () => {
               <CardContent>
                 <div className="text-2xl font-bold text-foreground">{stat.value}</div>
                 <p className="text-xs text-muted-foreground">
-                  <span className={`${stat.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
+                  <span className={`${stat.trend === 'up' ? 'text-primary' : 'text-slate-600'}`}>
                     {stat.change}
                   </span>{" "}
                   em relação ao mês anterior
