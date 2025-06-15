@@ -3,6 +3,8 @@ import { BarChart2, CheckCircle, Clock, User, Bell, ChevronDown } from 'lucide-r
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
+import DISCReportModal from '@/components/DISCReportModal';
+import type { Json } from '@/integrations/supabase/types';
 
 // --- Paleta de Cores DIS ---
 const colors = {
@@ -21,7 +23,7 @@ interface Result {
   id: string;
   assessment_id: string;
   completed_at: string | null;
-  score: any;
+  score: Json;
 }
 
 interface Profile {
@@ -30,6 +32,15 @@ interface Profile {
 
 interface AssessmentWithStatus extends Assessment {
   status: 'Concluído' | 'Pendente';
+}
+
+interface DISCScore {
+  D: number;
+  I: number;
+  S: number;
+  C: number;
+  percentage?: number;
+  dominantProfile?: string;
 }
 
 // Componente do Cabeçalho do Dashboard
@@ -79,10 +90,12 @@ const KpiCard = ({ title, value, icon, colorClass }: {
 // Componente da Tabela de Avaliações
 const AssessmentsTable = ({ 
   assessments, 
-  onStartTest 
+  onStartTest,
+  onViewResult 
 }: { 
   assessments: AssessmentWithStatus[];
   onStartTest: (assessmentId: string) => void;
+  onViewResult: (assessmentId: string) => void;
 }) => {
   return (
     <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
@@ -113,11 +126,10 @@ const AssessmentsTable = ({
                   <button 
                     className={`font-semibold text-white px-4 py-2 rounded-lg shadow-sm transition-all transform hover:scale-105 ${
                       item.status === 'Concluído' 
-                        ? 'bg-slate-400 cursor-not-allowed' 
+                        ? 'bg-[#00A9E0] hover:bg-[#0097c7]' 
                         : 'bg-[#0A2F5C] hover:bg-[#061E3B]'
                     }`}
-                    disabled={item.status === 'Concluído'}
-                    onClick={() => onStartTest(item.id)}
+                    onClick={() => item.status === 'Concluído' ? onViewResult(item.id) : onStartTest(item.id)}
                   >
                     {item.status === 'Concluído' ? 'Ver Resultado' : 'Iniciar Teste'}
                   </button>
@@ -140,6 +152,14 @@ export default function DashboardPage() {
   const [results, setResults] = useState<Result[]>([]);
   const [assessmentsWithStatus, setAssessmentsWithStatus] = useState<AssessmentWithStatus[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Estados para o modal de relatório
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [selectedResultData, setSelectedResultData] = useState<{
+    score: DISCScore;
+    assessmentName: string;
+    completedAt: string;
+  } | null>(null);
 
   // Estatísticas calculadas
   const completedTests = results.filter(result => result.completed_at).length;
@@ -216,6 +236,49 @@ export default function DashboardPage() {
     navigate(`/teste/${assessmentId}`);
   };
 
+  const handleViewResult = async (assessmentId: string) => {
+    if (!user) return;
+
+    try {
+      // Buscar o resultado específico do usuário para este assessment
+      const { data: resultData } = await supabase
+        .from('results')
+        .select('score, completed_at')
+        .eq('candidate_id', user.id)
+        .eq('assessment_id', assessmentId)
+        .not('completed_at', 'is', null)
+        .single();
+
+      if (!resultData) {
+        console.error('Resultado não encontrado');
+        return;
+      }
+
+      // Buscar informações do assessment
+      const { data: assessmentData } = await supabase
+        .from('assessments')
+        .select('name')
+        .eq('id', assessmentId)
+        .single();
+
+      if (!assessmentData) {
+        console.error('Assessment não encontrado');
+        return;
+      }
+
+      // Configurar dados para o modal
+      setSelectedResultData({
+        score: resultData.score as unknown as DISCScore,
+        assessmentName: assessmentData.name,
+        completedAt: resultData.completed_at
+      });
+
+      setIsReportModalOpen(true);
+    } catch (error) {
+      console.error('Erro ao buscar resultado:', error);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
@@ -256,7 +319,19 @@ export default function DashboardPage() {
         <AssessmentsTable 
           assessments={assessmentsWithStatus}
           onStartTest={handleStartTest}
+          onViewResult={handleViewResult}
         />
+
+        {/* Modal de Relatório DISC */}
+        {selectedResultData && (
+          <DISCReportModal
+            isOpen={isReportModalOpen}
+            onClose={() => setIsReportModalOpen(false)}
+            score={selectedResultData.score}
+            assessmentName={selectedResultData.assessmentName}
+            completedAt={selectedResultData.completedAt}
+          />
+        )}
       </main>
     </div>
   );
