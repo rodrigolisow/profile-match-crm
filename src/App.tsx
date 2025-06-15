@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import CandidateDashboard from "./pages/CandidateDashboard";
 import CandidateProfile from "./pages/CandidateProfile";
 import TestTaking from "./pages/TestTaking";
+import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();

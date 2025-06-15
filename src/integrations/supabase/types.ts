@@ -40,6 +40,7 @@ export type Database = {
         Row: {
           address: string | null
           birth_date: string | null
+          company_id: string | null
           created_at: string
           id: string
           linkedin_profile: string | null
@@ -49,6 +50,7 @@ export type Database = {
         Insert: {
           address?: string | null
           birth_date?: string | null
+          company_id?: string | null
           created_at?: string
           id: string
           linkedin_profile?: string | null
@@ -58,6 +60,7 @@ export type Database = {
         Update: {
           address?: string | null
           birth_date?: string | null
+          company_id?: string | null
           created_at?: string
           id?: string
           linkedin_profile?: string | null
@@ -65,6 +68,13 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "candidates_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "candidates_id_fkey"
             columns: ["id"]
@@ -100,6 +110,53 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      invitations: {
+        Row: {
+          candidate_email: string
+          candidate_name: string | null
+          company_id: string
+          created_at: string
+          expires_at: string
+          id: string
+          invited_at: string
+          invited_by: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          candidate_email: string
+          candidate_name?: string | null
+          company_id: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          invited_at?: string
+          invited_by: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          candidate_email?: string
+          candidate_name?: string | null
+          company_id?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          invited_at?: string
+          invited_by?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invitations_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -181,7 +238,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_current_user_company: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      get_current_user_role: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never

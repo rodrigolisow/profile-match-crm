@@ -94,17 +94,17 @@ const AdminDashboard = () => {
           .is('completed_at', null)
           .eq('candidates.company_id', companyData.id);
 
-        // Fetch invitations count
-        const { count: invitationsCount } = await supabase
-          .from('invitations')
-          .select('*', { count: 'exact', head: true })
-          .eq('company_id', companyData.id);
+        // Fetch invitations count (commented out until invitations table is available)
+        // const { count: invitationsCount } = await supabase
+        //   .from('invitations')
+        //   .select('*', { count: 'exact', head: true })
+        //   .eq('company_id', companyData.id);
 
         setStats({
           totalCandidates: candidatesCount || 0,
           completedTests: completedCount || 0,
           pendingTests: pendingCount || 0,
-          totalInvitations: invitationsCount || 0
+          totalInvitations: 0 // invitationsCount || 0
         });
       }
     } catch (error) {
