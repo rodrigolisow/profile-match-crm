@@ -1,30 +1,63 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { user, signIn, signInWithGoogle } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
+
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Placeholder for Supabase auth implementation
     try {
-      // TODO: Implement Supabase auth after integration
-      toast({
-        title: "Aguardando integração com Supabase",
-        description: "A funcionalidade de login será implementada após conectar ao Supabase.",
-        variant: "default",
-      });
+      const { error } = await signIn(email, password);
+
+      if (error) {
+        if (error.message.includes("Invalid login credentials")) {
+          toast({
+            title: "Credenciais inválidas",
+            description: "E-mail ou senha incorretos.",
+            variant: "destructive",
+          });
+        } else if (error.message.includes("Email not confirmed")) {
+          toast({
+            title: "E-mail não confirmado",
+            description: "Verifique seu e-mail e confirme sua conta antes de fazer login.",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Erro no login",
+            description: error.message,
+            variant: "destructive",
+          });
+        }
+      } else {
+        toast({
+          title: "Login realizado com sucesso!",
+          description: "Bem-vindo de volta ao TalentMatch.",
+          variant: "default",
+        });
+        navigate('/dashboard');
+      }
     } catch (error) {
       toast({
         title: "Erro no login",
@@ -40,12 +73,15 @@ const Login = () => {
     setIsLoading(true);
     
     try {
-      // TODO: Implement Google OAuth with Supabase
-      toast({
-        title: "Aguardando integração com Supabase",
-        description: "O login com Google será implementado após conectar ao Supabase.",
-        variant: "default",
-      });
+      const { error } = await signInWithGoogle();
+
+      if (error) {
+        toast({
+          title: "Erro no login",
+          description: error.message,
+          variant: "destructive",
+        });
+      }
     } catch (error) {
       toast({
         title: "Erro no login",

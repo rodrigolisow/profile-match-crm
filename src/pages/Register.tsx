@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -6,10 +6,14 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
     companyName: "",
     cnpj: "",
@@ -22,6 +26,13 @@ const Register = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -62,12 +73,43 @@ const Register = () => {
     setIsLoading(true);
     
     try {
-      // TODO: Implement Supabase registration after integration
-      toast({
-        title: "Aguardando integração com Supabase",
-        description: "O cadastro será implementado após conectar ao Supabase.",
-        variant: "default",
+      const metadata = {
+        full_name: formData.fullName,
+        company_name: formData.companyName,
+        cnpj: formData.cnpj,
+        role: formData.role
+      };
+
+      const { error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/`,
+          data: metadata
+        }
       });
+
+      if (error) {
+        if (error.message.includes("User already registered")) {
+          toast({
+            title: "Usuário já cadastrado",
+            description: "Este e-mail já está registrado. Tente fazer login.",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Erro no cadastro",
+            description: error.message,
+            variant: "destructive",
+          });
+        }
+      } else {
+        toast({
+          title: "Cadastro realizado com sucesso!",
+          description: "Verifique seu e-mail para confirmar sua conta.",
+          variant: "default",
+        });
+      }
     } catch (error) {
       toast({
         title: "Erro no cadastro",
@@ -83,12 +125,22 @@ const Register = () => {
     setIsLoading(true);
     
     try {
-      // TODO: Implement Google OAuth with Supabase
-      toast({
-        title: "Aguardando integração com Supabase",
-        description: "O cadastro com Google será implementado após conectar ao Supabase.",
-        variant: "default",
+      const redirectUrl = `${window.location.origin}/`;
+      
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: redirectUrl
+        }
       });
+
+      if (error) {
+        toast({
+          title: "Erro no cadastro",
+          description: error.message,
+          variant: "destructive",
+        });
+      }
     } catch (error) {
       toast({
         title: "Erro no cadastro",
