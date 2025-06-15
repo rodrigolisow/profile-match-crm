@@ -7,6 +7,7 @@ import { ArrowLeft, User, Phone, MapPin, Calendar, LinkedinIcon, FileText, LogOu
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Link, Navigate, useParams } from "react-router-dom";
+import DISCReportModal from "@/components/DISCReportModal";
 
 interface CandidateDetails {
   id: string;
@@ -44,6 +45,8 @@ const AdminCandidateDetail = () => {
   const [loading, setLoading] = useState(true);
   const [userRole, setUserRole] = useState<string>('');
   const [company, setCompany] = useState<Company | null>(null);
+  const [selectedResult, setSelectedResult] = useState<TestResult | null>(null);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
 
   if (!user) {
     return <Navigate to="/login" replace />;
@@ -139,6 +142,11 @@ const AdminCandidateDetail = () => {
   const formatDateTime = (dateString: string) => {
     if (!dateString) return 'Não informado';
     return new Date(dateString).toLocaleString('pt-BR');
+  };
+
+  const handleViewReport = (result: TestResult) => {
+    setSelectedResult(result);
+    setIsReportModalOpen(true);
   };
 
   if (userRole && userRole !== 'admin') {
@@ -321,12 +329,23 @@ const AdminCandidateDetail = () => {
                             <p className="text-sm text-muted-foreground">
                               Concluído em: {formatDateTime(result.completed_at)}
                             </p>
-                            {result.score && result.score.percentage && (
-                              <div className="text-sm">
-                                <span className="text-muted-foreground">Pontuação: </span>
-                                <span className="font-medium">{result.score.percentage}%</span>
-                              </div>
-                            )}
+                            <div className="flex items-center gap-3">
+                              {result.score && result.score.percentage && (
+                                <div className="text-sm">
+                                  <span className="text-muted-foreground">Pontuação: </span>
+                                  <span className="font-medium">{result.score.percentage}%</span>
+                                </div>
+                              )}
+                              {result.score && result.assessments.name.toLowerCase().includes('disc') && (
+                                <Button 
+                                  variant="outline" 
+                                  size="sm"
+                                  onClick={() => handleViewReport(result)}
+                                >
+                                  Ver Relatório DISC
+                                </Button>
+                              )}
+                            </div>
                           </div>
                         </div>
                       ))}
@@ -375,6 +394,17 @@ const AdminCandidateDetail = () => {
           </div>
         </div>
       </div>
+
+      {/* DISC Report Modal */}
+      {selectedResult && selectedResult.score && (
+        <DISCReportModal
+          isOpen={isReportModalOpen}
+          onClose={() => setIsReportModalOpen(false)}
+          score={selectedResult.score}
+          assessmentName={selectedResult.assessments.name}
+          completedAt={selectedResult.completed_at}
+        />
+      )}
     </div>
   );
 };
