@@ -174,17 +174,25 @@ const Login = () => {
           </CardContent>
         </Card>
 
-        <div className="text-center mt-6 text-sm text-slate-500">
-          <p>
-            Ao continuar, você concorda com nossos{" "}
-            <Link to="/terms" className="text-[#0A2F5C] hover:underline">
-              Termos de Uso
-            </Link>{" "}
-            e{" "}
-            <Link to="/privacy" className="text-[#0A2F5C] hover:underline">
-              Política de Privacidade
-            </Link>
-          </p>
+        <div className="text-center mt-6 space-y-4">
+          <Link 
+            to="/" 
+            className="inline-block text-[#0A2F5C] hover:underline font-medium"
+          >
+            ← Retornar ao início
+          </Link>
+          <div className="text-sm text-slate-500">
+            <p>
+              Ao continuar, você concorda com nossos{" "}
+              <Link to="/terms" className="text-[#0A2F5C] hover:underline">
+                Termos de Uso
+              </Link>{" "}
+              e{" "}
+              <Link to="/privacy" className="text-[#0A2F5C] hover:underline">
+                Política de Privacidade
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>

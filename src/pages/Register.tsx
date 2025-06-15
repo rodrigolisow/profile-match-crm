@@ -308,8 +308,16 @@ const Register = () => {
           </CardContent>
         </Card>
 
-        <div className="text-center mt-6 text-sm text-slate-500">
-          <p>✓ 14 dias grátis • ✓ Sem compromisso • ✓ Cancele quando quiser</p>
+        <div className="text-center mt-6 space-y-4">
+          <Link 
+            to="/" 
+            className="inline-block text-[#0A2F5C] hover:underline font-medium"
+          >
+            ← Retornar ao início
+          </Link>
+          <div className="text-sm text-slate-500">
+            <p>✓ 14 dias grátis • ✓ Sem compromisso • ✓ Cancele quando quiser</p>
+          </div>
         </div>
       </div>
     </div>
