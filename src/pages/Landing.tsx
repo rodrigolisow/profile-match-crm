@@ -162,7 +162,7 @@ const Landing = () => {
               </Button>
             </div>
             <div className="lg:pl-8">
-              <Card className="p-8 bg-gradient-to-br from-primary/5 to-accent/10 border-0">
+              <Card className="p-8 bg-gradient-to-br from-primary/5 to-primary/10 border-0 shadow-md">
                 <div className="text-center">
                   <div className="text-4xl font-bold text-primary mb-2">95%</div>
                   <p className="text-muted-foreground mb-6">
