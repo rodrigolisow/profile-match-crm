@@ -292,7 +292,7 @@ const AdminDashboard = () => {
                   </p>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-orange-600 mb-2">
+                  <div className="text-2xl font-bold text-primary mb-2">
                     {stats.pendingTests}
                   </div>
                   <p className="text-sm text-muted-foreground">
