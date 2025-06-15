@@ -74,7 +74,7 @@ const Dashboard = () => {
       case "Teste Concluído":
         return "bg-blue-100 text-blue-800";
       case "Em Andamento":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-blue-50 text-blue-700";
       default:
         return "bg-gray-100 text-gray-800";
     }

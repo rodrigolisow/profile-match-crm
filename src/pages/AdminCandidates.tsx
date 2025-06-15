@@ -149,7 +149,7 @@ const AdminCandidates = () => {
       case "Concluído":
         return "bg-green-100 text-green-800";
       case "Em Andamento":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-blue-50 text-blue-700";
       case "Pendente":
         return "bg-gray-100 text-gray-800";
       default:
